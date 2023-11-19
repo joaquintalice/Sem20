@@ -9,7 +9,7 @@ export default class AuthModel {
     }
 
     async getAll() {
-        return await prisma.user.findMany();
+        return await prisma.user.findMany({ include: { files: true, privateFile: true } });
     }
 
     async getByEmail(email) {
