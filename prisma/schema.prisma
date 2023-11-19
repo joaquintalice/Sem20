@@ -10,10 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id        Int      @id @default(autoincrement())
+model user {
+  id        String   @id @default(uuid())
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  files       files[]
+  privateFile privateFiles[]
+}
+
+model files {
+  id        String   @id @unique @default(uuid())
+  img       String
+  createdAt DateTime @default(now())
+
+  users  user?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model privateFiles {
+  id        String   @id @unique @default(uuid())
+  img       String
+  createdAt DateTime @default(now())
+
+  user   user?   @relation(fields: [userId], references: [id])
+  userId String?
 }
