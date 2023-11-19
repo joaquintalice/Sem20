@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-export default class UserModel {
+export default class AuthModel {
 
     async insert({ email, password }) {
         return await prisma.users.create({ data: { email, password } });
@@ -10,6 +10,10 @@ export default class UserModel {
 
     async getAll() {
         return await prisma.users.findMany();
+    }
+
+    async getByEmail(email) {
+        return await prisma.users.findUnique({ where: { email: email } });
     }
 
     async getById(id) {
