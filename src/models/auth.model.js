@@ -5,26 +5,26 @@ const prisma = new PrismaClient()
 export default class AuthModel {
 
     async insert({ email, password }) {
-        return await prisma.users.create({ data: { email, password } });
+        return await prisma.user.create({ data: { email, password } });
     }
 
     async getAll() {
-        return await prisma.users.findMany();
+        return await prisma.user.findMany();
     }
 
     async getByEmail(email) {
-        return await prisma.users.findUnique({ where: { email: email } });
+        return await prisma.user.findUnique({ where: { email: email } });
     }
 
     async getById(id) {
-        return await prisma.users.findUnique({ where: { id: id } });
+        return await prisma.user.findUnique({ where: { id: id } });
     }
 
     async update(id, body) {
-        return await prisma.users.update({ where: { id, }, data: body });
+        return await prisma.user.update({ where: { id, }, data: body });
     }
 
     async remove(id) {
-        return await prisma.users.delete({ where: { id } });
+        return await prisma.user.delete({ where: { id } });
     }
 }
