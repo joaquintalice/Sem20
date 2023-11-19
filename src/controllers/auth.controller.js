@@ -81,9 +81,9 @@ export default class AuthController {
 
             const id = req.params.id;
 
-            if (isNaN(id)) res.status(BAD_REQUEST).json({ status: req.status, message: `ID is must be a number` });
+            if (!this.isUUID(id)) res.status(BAD_REQUEST).json({ status: req.status, message: `ID is must be an UUID` });
 
-            const user = await authModel.getById(+id);
+            const user = await authModel.getById(id);
 
             if (!user) res.status(NOT_FOUND).json({ status: req.status, message: "User not found" });
 
@@ -106,7 +106,9 @@ export default class AuthController {
 
             if (!email && !password) res.status(BAD_REQUEST).json({ status: req.status, message: `Email or password are required in the body to update user with id ${id}` });
 
-            const updatedUser = await authModel.update(+id, { email, password })
+            const hashedPassword = await this.hashPassword(password)
+
+            const updatedUser = await authModel.update(id, { email, password: hashedPassword })
 
             res.status(OK).json(updatedUser)
 
@@ -121,9 +123,9 @@ export default class AuthController {
 
             const id = req.params.id;
 
-            if (isNaN(id)) res.status(BAD_REQUEST).json({ status: req.status, message: `ID is must be a number` });
+            if (!this.isUUID(id)) res.status(BAD_REQUEST).json({ status: req.status, message: `ID is must be an UUID` });
 
-            const deletedUser = await authModel.remove(+id)
+            const deletedUser = await authModel.remove(id)
 
             res.status(OK).json(deletedUser)
 
@@ -153,6 +155,11 @@ export default class AuthController {
         const payload = { id, email }
 
         return jwt.sign(payload, jwtSecret)
+    }
+
+    isUUID(uuid) {
+        const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+        return uuidRegex.test(uuid);
     }
 
 }
