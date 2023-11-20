@@ -1,5 +1,4 @@
-src/uploads/*
-src/!uploads/.gitkeep
+
 
 # Logs
 logs
