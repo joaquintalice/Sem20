@@ -24,6 +24,7 @@ model user {
 model files {
   id        String   @id @unique @default(uuid())
   img       String
+  url       String
   createdAt DateTime @default(now())
 
   users  user?   @relation(fields: [userId], references: [id])
@@ -33,6 +34,7 @@ model files {
 model privateFiles {
   id        String   @id @unique @default(uuid())
   img       String
+  url       String
   createdAt DateTime @default(now())
 
   user   user?   @relation(fields: [userId], references: [id])
