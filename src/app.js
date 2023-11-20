@@ -9,6 +9,8 @@ import { authenticateUser } from './utils/jwtStrategy.js';
 
 import authRoutes from './routes/auth.routes.js';
 import fileRoutes from './routes/files.routes.js';
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -20,7 +22,9 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/uploads', express.static('uploads'));
+const CURRENT_DIR = dirname(fileURLToPath(import.meta.url))
+
+app.use('/uploads', express.static(join(CURRENT_DIR, './uploads')));
 app.use('/auth', authRoutes);
 app.use('/file', authenticateUser, fileRoutes);
 

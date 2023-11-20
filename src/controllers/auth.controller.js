@@ -49,7 +49,6 @@ export default class AuthController {
         // signJwt token
         const token = await this.signToken({ id: foundUser.id, email: foundUser.email });
         if (!token) res.stats(FORBIDDEN).json({ message: "Error providing access token" });
-        res.cookie('jwt', token, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000, secure: true, SameSite: 'None', domain: 'localhost', Path: '/' });
 
         res.status(OK).json({ message: "Login was success", status: 'magnifike', data: foundUser, token: token });
     }

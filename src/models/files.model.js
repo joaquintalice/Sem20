@@ -31,8 +31,8 @@ export class PrivateFileModel {
         return await prisma.privateFiles.create({ data: { img, userId } });
     }
 
-    async getAll() {
-        return await prisma.privateFiles.findMany();
+    async getAllByUser(id) {
+        return await prisma.privateFiles.findMany({ where: { userId: id } });
     }
 
     async getById(id) {

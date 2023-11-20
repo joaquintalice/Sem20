@@ -32,12 +32,14 @@ const privateFileModel = new PrivateFileModel();
 export default class FilesController {
 
     uploadFile = async (req, res) => {
-
+        console.log(req.body)
+        console.log({ file: req.file })
         const userId = req.user.id;
         const fileName = req.file.filename;
-
+        console.log(fileName)
+        console.log(userId)
         const fileUploaded = await fileModel.insert({ img: fileName, userId });
-
+        if (!fileUploaded) res.status(CONFLICT).json({ message: "error uploading data" })
         res.status(OK).json({ message: "Archivo subido con éxito", fileUploaded })
     }
 
@@ -55,7 +57,7 @@ export default class FilesController {
             const publicFiles = await fileModel.getAll();
             const fileNames = publicFiles.map(file => file.img);
             const paths = fileNames.map(fileName => `/uploads/${fileName}`);
-
+            console.log(fileNames)
             res.status(OK).json({ paths });
         } catch (error) {
             console.error(error);
@@ -65,7 +67,8 @@ export default class FilesController {
 
     getPrivateFilesPaths = async (req, res) => {
         try {
-            const privateFiles = await privateFileModel.getAll();
+
+            const privateFiles = await privateFileModel.getAllByUser(req.user.id);
             const fileNames = privateFiles.map(file => file.img);
             const paths = fileNames.map(fileName => `/uploads/${fileName}`);
 
