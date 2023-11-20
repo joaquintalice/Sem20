@@ -1,5 +1,6 @@
 import { Router } from "express";
-import FilesController, { multerUpload } from "../controllers/files.controller.js";
+import FilesController from "../controllers/files.controller.js";
+import { multerUpload } from "../utils/cloudinary/cloudinary.js";
 
 
 

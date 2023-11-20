@@ -4,8 +4,8 @@ const prisma = new PrismaClient()
 
 export class FileModel {
 
-    async insert({ img, userId }) {
-        return await prisma.files.create({ data: { img, userId } });
+    async insert({ img, url, userId }) {
+        return await prisma.files.create({ data: { img, url, userId } });
     }
 
     async getAll() {
@@ -27,8 +27,8 @@ export class FileModel {
 
 export class PrivateFileModel {
 
-    async insert({ img, userId }) {
-        return await prisma.privateFiles.create({ data: { img, userId } });
+    async insert({ img, userId, url }) {
+        return await prisma.privateFiles.create({ data: { img, userId, url } });
     }
 
     async getAllByUser(id) {
