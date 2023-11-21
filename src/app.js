@@ -26,7 +26,14 @@ const app = express();
 
 const PORT = process.env.PORT || 3005;
 
-app.use(cors());
+const corsOptions = {
+    origin: ['https://joaquintalice.github.io/s20F'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
