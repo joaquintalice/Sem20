@@ -29,7 +29,6 @@ const PORT = process.env.PORT || 3005;
 const corsOptions = {
     origin: ['https://joaquintalice.github.io/s20F'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
     optionsSuccessStatus: 204,
 };
 
