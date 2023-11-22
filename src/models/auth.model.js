@@ -17,7 +17,7 @@ export default class AuthModel {
     }
 
     async getById(id) {
-        return await prisma.user.findUnique({ where: { id: id } });
+        return await prisma.user.findUnique({ where: { id: id }, include: { files: true, privateFile: true } });
     }
 
     async update(id, body) {
