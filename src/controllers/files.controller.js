@@ -21,7 +21,14 @@ export default class FilesController {
 
             res.status(OK).json({ message: "Archivo subido con éxito", insertedFile });
         } catch (error) {
-            console.error(error);
+            if (error instanceof multer.MulterError) {
+                if (error.code === 'LIMIT_FILE_SIZE') {
+                    return res.status(BAD_REQUEST).json({ error: 'El archivo excede el tamaño máximo permitido (6 MB)' });
+                }
+                if (error.code === 'LIMIT_FILE_COUNT') {
+                    return res.status(BAD_REQUEST).json({ error: 'Solo se permite un archivo por vez' });
+                }
+            }
             res.status(INTERNAL_SERVER_ERROR).json({ error: 'Error interno del servidor.' });
         }
     }
@@ -42,7 +49,14 @@ export default class FilesController {
 
             res.status(OK).json({ message: "Archivo subido con éxito", insertedFile });
         } catch (error) {
-            console.error(error);
+            if (error instanceof multer.MulterError) {
+                if (error.code === 'LIMIT_FILE_SIZE') {
+                    return res.status(BAD_REQUEST).json({ error: 'El archivo excede el tamaño máximo permitido (6 MB)' });
+                }
+                if (error.code === 'LIMIT_FILE_COUNT') {
+                    return res.status(BAD_REQUEST).json({ error: 'Solo se permite un archivo por vez' });
+                }
+            }
             res.status(INTERNAL_SERVER_ERROR).json({ error: 'Error interno del servidor.' });
         }
     }
