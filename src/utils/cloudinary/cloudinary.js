@@ -14,6 +14,8 @@ export const multerUpload = multer({
     storage,
     fileFilter: (req, file, cb) => {
 
+        console.log(file)
+
         if (!file.mimetype.startsWith('image/')) {
             return cb(new Error('Solo se permiten archivos de imagen'), false);
         }

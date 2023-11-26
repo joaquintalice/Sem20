@@ -42,13 +42,14 @@ export default class FilesController {
             const { filename, path } = req.file
 
             const insertedFile = await privateFileModel.insert({ img: filename, url: path, userId: userId });
-
+            console.log(insertedFile)
             if (!insertedFile) {
                 return res.status(CONFLICT).json({ message: "Error uploading data" });
             }
 
             res.status(OK).json({ message: "Archivo subido con éxito", insertedFile });
         } catch (error) {
+            console.log(error)
             if (error instanceof multer.MulterError) {
                 if (error.code === 'LIMIT_FILE_SIZE') {
                     return res.status(BAD_REQUEST).json({ error: 'El archivo excede el tamaño máximo permitido (6 MB)' });
