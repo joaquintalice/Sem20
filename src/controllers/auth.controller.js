@@ -23,7 +23,7 @@ export default class AuthController {
         if (!validateEmail(email)) res.status(BAD_REQUEST).json({ message: "must provide a valid email" })
 
         const foundUser = await authModel.getByEmail(email)
-        if (foundUser) res.status(BAD_REQUEST).json({ message: "Ya existe un usuario registrado con ese email" })
+        if (foundUser) res.status(CONFLICT).json({ message: "Ya existe un usuario registrado con ese email" })
 
         const hashedPassword = await this.hashPassword(password)
 
