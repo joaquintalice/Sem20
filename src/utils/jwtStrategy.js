@@ -3,8 +3,8 @@ import { UNAUTHORIZED } from '../utils/constants/httpStatusCodes.js';
 import { jwtSecret } from '../utils/constants/jwtSecret.js';
 
 export const authenticateUser = (req, res, next) => {
-    const token = req.headers.authorization;
-
+    const BearerToken = req.headers.authorization;
+    const token = BearerToken.split(' ')[1]
     if (!token) {
         return res.status(UNAUTHORIZED).json({ error: 'Usuario no autenticado.' });
     }
