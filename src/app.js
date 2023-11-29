@@ -28,7 +28,7 @@ const PORT = process.env.PORT || 3005;
 
 
 app.use(cors({
-    origin: "https://joaquintalice.github.io",
+    origin: "*",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 }));
 app.use(express.json());
